@@ -7,6 +7,8 @@ import { zhCN, darkTheme, NButton } from 'naive-ui'
 import { ref } from 'vue'
 const theme = ref(null)
 const mainStore = useMainStore()
+import { searchTips } from '@/axios/apis/example'
+
 // console.log(import.meta.env.VITE_APP_WEB_URL)
 // 使用 store 更新 state
 const updateName = () => {
@@ -14,20 +16,30 @@ const updateName = () => {
   mainStore.$patch({
     name: '修改 name 值',
   })
+  onSearchTips()
+}
+
+const onSearchTips = () => {
+  const params = {
+    q: 'aaa',
+  }
+  searchTips.tips(params).then((res: any) => {
+    console.log(res)
+  })
 }
 </script>
 
 <template>
-  <n-space>
-    <n-button @click="theme = darkTheme">深色</n-button>
-    <n-button @click="theme = null">浅色</n-button>
-  </n-space>
-  <n-config-provider :locale="zhCN" :theme="theme">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <p>store 的 name：{{ mainStore.name }}</p>
-    <n-button @click="updateName">修改 store 的 name</n-button>
-    <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
-  </n-config-provider>
+  <!--  <n-space>-->
+  <n-button @click="theme = darkTheme">深色</n-button>
+  <n-button @click="theme = null">浅色</n-button>
+  <!--  </n-space>-->
+  <!--  <n-config-provider :locale="zhCN" :theme="theme">-->
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <p>store 的 name：{{ mainStore.name }}</p>
+  <n-button @click="updateName">修改 store 的 name</n-button>
+  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <!--  </n-config-provider>-->
 </template>
 
 <style lang="scss">
